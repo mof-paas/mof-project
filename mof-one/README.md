@@ -1,0 +1,14 @@
+一、框架初始化方法
+1、修改Web.xml
+<context-param>
+			    <param-name>MOF-USER-ID</param-name>
+			    <param-value>{魔方平台用户标识}</param-value>
+			  </context-param>
+			  <context-param>
+			    <param-name>MOF-APP-ID</param-name>
+			    <param-value>{应用ID}</param-value>
+			  </context-param>
+			  <context-param>
+			    <param-name>MOF-APP-TYPE</param-name>
+			    <param-value>{1}</param-value>
+</context-param>

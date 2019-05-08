@@ -1,0 +1,12 @@
+body{
+font-family: Arial,Verdana,Sans-serif;
+margin: 0px;
+font-size: 14px;
+}
+/* 背景颜色 */
+.mof-bg-red{
+	background-color: red;
+}
+.mof-bg-green{
+		background-color: green;
+}

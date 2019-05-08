@@ -1,0 +1,38 @@
+.grid-stack {
+	margin-top: 5px;
+	overflow: hidden;
+}
+.grid-stack-item-content {
+	position: relative;
+}
+/* 页面模块样式 */
+.grid-module{
+		overflow: hidden;
+}
+.grid-module-a{
+	
+}
+/* 页面模块标题 */
+.grid-title{
+	font-weight: bold;
+	padding-left: 10px;	
+	line-height: 35px;
+	border-bottom: 1px solid #f6f6f6;
+	color:#808080;
+}
+/* 无底居左 */
+.grid-title-a{
+	font-weight: bold;
+	line-height:30px;
+	text-align: center;
+	padding-left: 10px;	
+}
+/* 含背景 */
+.grid-title-b{
+	font-weight: bold;
+	line-height:30px;
+	text-align: center;
+	padding-left: 10px;	
+	background-color: #e6e6e6;
+	border-bottom: 1px solid #f6f6f6;
+}

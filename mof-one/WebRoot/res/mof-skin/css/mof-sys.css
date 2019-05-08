@@ -1,0 +1,296 @@
+@import "mof-base.css";
+
+/* 业务管理系统样式 【主控制台】*/
+.mof-header {
+	z-index:1000;
+	position: fixed;
+	top:0px;
+	background-color: rgb(0, 94, 176);
+	height: 70px;
+	width:100%;
+	padding-left: 30px;
+	border-bottom: 0px solid #ccc;
+	 background-image: url(../img/sys-header2-bg.png); 
+	background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+	/* background-repeat: no-repeat;
+background-position: 500px -0px; */
+}
+.mof-header .logo-img {
+	float: left;
+	width: 35px;
+	height: 35px;
+	margin-top:15px;
+	background-image: url(../img/sys-logo.png);
+	background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+}
+.mof-header .logo-title {
+	float: left;
+	margin-top:15px;
+	margin-left: 10px;
+	color:  #AAAAAA;
+	font-size: 23px;
+}
+.mof-header .top-menu {
+	float: left;
+}
+.mof-header .top-menu ul li{
+	float: left;
+	list-style: none;
+	margin-left:10px;
+	padding-left:10px;
+	padding-right:10px;
+	padding-top:12px; 
+	height:70px; 
+	color: #fff;
+	font-size: 15px;
+	text-align: center;
+	cursor: pointer;
+}
+.mof-header .top-menu ul li:HOVER {
+	border-bottom:3px solid  #33CCFF ;
+}
+.mof-header .top-menu ul .active{
+	background-color:  #33CCFF ;
+	color: #000;
+}
+.mof-header .user-info{
+	border-radius: 10px; cursor:pointer;  color:#BBFF00; right: 20px; top: 25px; position: absolute; font-size: 18px;
+}
+.mof-header .user-info:HOVER{
+	margin: 1px;
+}
+/* 页面内容 */
+.mof-content{
+	margin-top: 70px;
+	width: 100%;
+	height: 100%;
+}
+.mof-content .mof-content-left{
+	float: left;
+	background-color: #e6e6e6;
+	margin-left: 0px;
+	max-width: 210px;
+	min-width:70px; 
+	border-right: 1px solid #ddd;
+	display: none;
+}
+.mof-content-left .left-menu .left-item{
+	list-style: none;
+	margin-left: -40px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	line-height: 40px;
+	margin-bottom: 2px;
+	position: relative;
+	border-bottom: 1px solid #ddd;
+	cursor: pointer;
+}
+.left-menu .active{
+	border-left: 3px solid #33ccff;
+	font-weight: bold;
+}
+.mof-content-left .left-menu .left-menu-header{
+border-bottom: 1px solid #ddd; 
+color: #808080;
+ font-size: 17px;
+ line-height: 50px;
+overflow: hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+}
+.mof-content-left .left-menu .left-menu-header .left-menu-header-icon{
+	cursor: pointer;  margin-left:25px;
+}
+.mof-content-left .left-menu .left-menu-header .left-menu-header-name{
+	 margin-left: 10px;
+}
+.mof-content-left .left-menu .left-item-icon{
+	margin-left:25px;
+	font-size: 16px;
+}
+.mof-content-left .left-menu .left-item-name{
+	font-size: 15px;
+	margin-left: 10px;
+	display: none;
+}
+.mof-content-left .left-menu .left-item-tag{
+	position:absolute;
+	right:10px;
+	margin-top: 12px;
+	color: #ccc;
+}
+/* 左边导航三级下滑菜单 */
+.mof-content-left  .left-item-children-root{
+	background-color: #666666;
+	color:#ccc;
+	display: none;
+}
+.mof-content-left  .left-item-children-item{
+list-style: none;
+border-top: 1px solid  #666666;	
+margin-left: -40px;
+overflow: hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+line-height: 40px;
+cursor: pointer;
+}
+/* 左边漂浮子菜单 */
+.left-item-children-float{
+	position: absolute;
+	border-top: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	padding: 10px;
+	background-color: #fff;
+	min-width:150px;
+	min-height: 200px;
+	display: none;
+}
+/* 左边浮动导航 */
+.children-float{
+	list-style: none;
+	margin-left: -40px;
+}
+.children-float li
+{
+	line-height: 40px;
+	cursor: pointer;
+	padding-left:10px;
+	border-bottom: 1px solid #f6f6f6;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;	
+}
+.children-float .float-title{
+	color: #ccc;
+	font-size: 15px;
+}
+.mof-content .mof-content-center{
+	float: none;
+	margin-left: 70px;
+	width: auto;
+}
+/* 页面片段区域 */
+.view-fragment{
+	display: none;
+}
+/* Iframe嵌入标准页面区 */
+.view-ifram{
+	display: none;
+}
+/* 【列表表单页样式】 */
+.mof-page-header{
+	line-height: 50px;
+	width:100%;
+	position: fixed;
+	border-bottom: 1px solid #eee;
+	padding-left: 10px;
+	background-color: #fff;
+	z-index: 100;
+}
+/* 列表中按钮样式 */
+.btn-list,.btn-list-down{
+	padding: 2px 8px;
+}
+/* 按钮下拉框 */
+.btn-dropdown{
+	position: absolute;
+	 background-color: #fff;
+	 display: none; 
+	 padding: 10px; 
+	 width:120px;
+	 border: 1px solid #eee;
+	 border-radius: 5px;
+}
+.btn-dropdown ul{
+	list-style: none;
+	margin-left: -40px;
+}
+.btn-dropdown li
+{
+	line-height: 40px;
+	cursor: pointer;
+	padding-left:10px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;	
+	cursor: pointer;
+}
+.btn-dropdown li:HOVER{
+	background-color: #eee;
+}
+/* 页面顶部工具栏 */
+.header-tools{
+	position: absolute;top:0px;  right: 0px; 
+}
+.header-title .page-title{
+	
+}
+.header-title .page-remark{
+	color:#ccc;
+}
+.header-title .page-status{
+	
+}
+.header-tools .tools-button{
+	float: right;margin-right: 10px;
+}
+.header-tools .tools-search{
+	float: right;margin-right: 10px; position: relative
+}
+.tools-search .search-layout{
+	margin-top: 16px;
+	position: relative;
+}
+.search-layout .search-icon{
+	position: absolute;top: 3px; right: 0px; font-size: 20px; color:#009688;
+}
+.mof-page-content{
+	padding:10px;
+	padding-top:60px;
+}
+/* 页面明细表格 */
+.table-detail{
+	padding-left: 100px;padding-right: 100px;
+}
+.table-grid-group{
+	line-height: 35px;
+	margin-top: 5px;
+	padding-left:10px;
+	background-color: #f6f6f6;
+	position: relative;
+	color: #EE7700;
+	border-left: 3px solid #EE7700;
+}
+.table-grid {
+width: 100%;
+border-collapse:collapse;
+margin-top: 5px;
+}
+.table-grid .tdl {
+	height: 35px;
+	text-align: right;
+	vertical-align: middle;
+	padding-right: 10px;
+	font-size: 14px;
+	white-space: nowrap;
+	padding-left: 5px;
+	color:#808080;
+	/* border: solid 1px #CCEEFF; */
+}
+.table-grid .tdl .bt{
+	color: red;
+	font-size: 20px;
+}
+.table-grid .tdv {
+	font-weight: bold;
+	padding: 5px;
+	/* border: solid 1px #CCEEFF;; */
+}
+.form-hidden{
+	display: none;
+}
