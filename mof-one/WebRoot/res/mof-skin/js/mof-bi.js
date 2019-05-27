@@ -13,9 +13,10 @@
 	if(pageInfo.base.REMARK!=""){
 		$(".page-remark").html("——" +pageInfo.base.REMARK);
 	}
+	/*用户自定义方法*/
+	_ext.initialPage();	
 	/*获取页面模块数据*/
 	var getPageModule=function(){
-		
 		_NormalRequest({
 				domId:"root-container",
 				url : "com/page-module",
@@ -104,13 +105,14 @@
 	};	
 	return pageInfo;
 }();
-
-/*数据显示类型*/
+/*数据透视图形*/
 var function_register = {
 	bar : {name:"get_echart_bar",method:get_echart_bar},/* 柱状图 */
 	line : {name:"get_echart_line",method:get_echart_line},/* 折线图 */
 	pie : {name:"get_echart_pie",method:get_echart_pie},/* 饼图 */
 	grid : {name:"get_grid_list",method:get_grid_list},/* 清单表 */
+	radar : {name:"get_echart_radar",method:get_echart_radar},/* 雷达图 */
+	gauge : {name:"get_echart_gauge",method:get_echart_gauge},/* 仪表盘 */
 };
 /*图表类数据显示*/
 function show_chart_view(mId,vtype,data,config,shell){
@@ -130,6 +132,7 @@ function show_grid_view(mId,vtype,data,config,shell){
 	}
 	initBootstrapGrid({method:m_name,container:mId,data:data,config:config},option);
 };
+
 /**
  * 获取【柱状图】配置模板
  */
@@ -314,6 +317,123 @@ function get_echart_pie(result, config){
 	return option;
 };
 /**
+ * 获取【雷达图】配置模板
+ */
+function  get_echart_radar(result, config){
+	var _legend_data = []; /* 图例 */
+	var _xAxis_data = [];/* 维度值 */
+	var _series = [];/* 度量项 */
+	/* 构造度量项 */
+	for (var n = 0; n < config.series.length; n++) {
+		_series.push({'value':[],'name':config.series[n].name,'field':config.series[n].field});
+		_legend_data.push(config.series[n].name);
+	};
+	/* 数据行 */
+	for (var i = 0; i < result.length; i++) {
+		/* 数据列 */
+		for ( var key in result[i]) {
+			/* 统计维度 */
+			for (var h = 0; h < config.xAxis.length; h++) {
+				if (key == config.xAxis[h].field) {
+					_xAxis_data.push({'text':result[i][key],'max':config.xAxis[h].max});
+					break;
+				}
+			}
+			/* 查找度量项的值*/
+			for (var j = 0; j < _series.length; j++) {
+				if (key == _series[j].field) {
+					_series[j].value.push(result[i][key]);
+					break;
+				}
+			}
+		}
+	};
+	var option = {
+		    tooltip : {
+		    	   trigger: 'axis'
+		    },
+		    legend: {
+		    	 orient : 'vertical',
+		         x : 'right',
+		         y : 'bottom',
+		        data:_legend_data
+		    },
+		    polar : [
+		       {
+		           indicator :_xAxis_data
+		        }
+		    ],
+		    calculable : true,
+		    series : [{
+				    name: '',
+		            type: 'radar',
+		            itemStyle: {
+		                normal: {
+		                    areaStyle: {
+		                        type: 'default'
+		                    }
+		                }
+		            },
+		            data:_series
+			    }
+		    ]
+		};
+	return option;
+};
+
+function get_echart_gauge(result, config){
+	
+	var option = {
+		    series : [
+		        {
+		            name:'指标',
+		            type:'gauge',
+		            splitNumber: 10,  
+		            axisLine: { 
+		                lineStyle: {   
+		                    color: [[0.2, '#228b22'],[0.8, '#48b'],[1, '#ff4500']], 
+		                    width: 5
+		                }
+		            },
+		            axisTick: {
+		                splitNumber: 10, 
+		                length :6, 
+		                lineStyle: { 
+		                    color: 'auto'
+		                }
+		            },
+		            axisLabel: {
+		                textStyle: {
+		                    color: 'auto'
+		                }
+		            },
+		            splitLine: {
+		                show: true, 
+		                length :10,
+		                lineStyle: {
+		                    color: 'auto'
+		                }
+		            },
+		            title : {
+		                show : false,
+		                offsetCenter: [0, '-40%'], 
+		                textStyle: { 
+		                }
+		            },
+		            detail : {
+		            	 show : false,
+		                formatter:'{value}%',
+		                textStyle: {
+		                    color: 'auto'
+		                }
+		            },
+		            data:[{value: 30, name: '完成率'}]
+		        }
+		    ]
+		};
+	return option;
+}
+/**
  * 获取【清单表格】配置模板
  */
 function get_grid_list(result, config) {
@@ -379,4 +499,17 @@ function initBootstrapGrid(paras, option)
 					$listTable.bootstrapTable('refresh', data);
 };
 /*获取数据*/
-
+function getViewData($module){
+	var my = {
+			dataContainer : $module.attr("id"),
+			url : "bi/getData",
+			para :{mid:$module.attr("id")},
+			callback : function(res) {
+				if(res.code=="1"){
+					var topicView={config:res.data.config, shell:res.data.shell, type:res.data.viewType,data:res.data.data};
+					showViewData(topicView,$module);
+				}
+			}
+	};
+_NormalRequest(my);
+};

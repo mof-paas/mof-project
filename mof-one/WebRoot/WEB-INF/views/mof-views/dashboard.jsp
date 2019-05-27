@@ -12,6 +12,7 @@
 	};
 </script>
 <style type="text/css">
+/* 模块样式 */
 .grid-stack-item-content {
 	background-color: #fff;
 	position: relative;
@@ -52,28 +53,33 @@
 </div>
 <!-- 按钮下拉框 -->
 <div class="btn-dropdown"></div>
-	<script src="${ctx}/res/mof-skin/js/mof-file-bi.js?v=1.0.2" type="text/javascript"></script>
 	<script type="text/javascript">
 	//自定义扩展方法
 	var	_ext=function(){
+		//页面初始化
+		this.initialPage=function(){
+
+		};
 		//页面元素创建后
-		var createEleAfter=function(){
+		this.createEleAfter=function(){
 			
 		};
 		//数据列表创建后
-		var dataLoadAfter=function(){
+		this.dataLoadAfter=function(){
 			
 		};
 		//自定义数据列表
-		var dataListTable=function(args){
+		this.dataListTable=function(args){
 			  
 		};
 		//获取数据记录前
-		var searchBefore=function(){
+		this.searchBefore=function(){
 			
 		};
-	};
+		return this;
+	}();
 	</script>
+	<script src="${ctx}/res/mof-skin/js/mof-file-bi.js?v=1.0.2" type="text/javascript"></script>
 </body>
 </html>
 
