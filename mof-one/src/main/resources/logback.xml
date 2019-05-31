@@ -6,8 +6,8 @@
 <configuration scan="true" scanPeriod="60 seconds"  debug="false">
 	<!-- 上下文名称 -->
 	<contextName>farm-log</contextName>
-	<!-- 存放日志文件路径 -->
-	<property name="Log_Home" value="D:/logs/mof-log" />
+	<!-- 存放日志文件路径 D:/logs/mof-log-->
+	<property name="Log_Home" value="/home/app-logs/mof-one" />
 	<!-- ch.qos.logback.core.ConsoleAppender 控制台输出 -->
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender"  >
 		<encoder>
