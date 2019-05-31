@@ -25,7 +25,7 @@
 <div class="mof-page-header">
 	<div class="header-title">
 	<span class="glyphicon glyphicon-file"></span>
-	<span class="page-title">***</span>
+	<span class="page-title"></span>
 	<span class="page-remark"></span> 
 	</div>
 	<div class="header-tools" >
@@ -79,7 +79,7 @@
 		return this;
 	}();
 	</script>
-	<script src="${ctx}/res/mof-skin/js/mof-file-bi.js?v=1.0.2" type="text/javascript"></script>
+	<script src="${ctx}/res/mof-skin/js/mof-file-bi.js?v=1.0.7" type="text/javascript"></script>
 </body>
 </html>
 

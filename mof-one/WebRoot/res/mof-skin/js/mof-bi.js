@@ -513,3 +513,4 @@ function getViewData($module){
 	};
 _NormalRequest(my);
 };
+var aJsLoad = 1;
