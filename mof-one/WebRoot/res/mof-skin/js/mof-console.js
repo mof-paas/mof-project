@@ -69,7 +69,7 @@ function loadMainPage(){
 	$(".mof-content-left").hide();
 	$(".mof-content-center").css("margin-left","0px");
 	$(".view-ifram").show();
-	$("#ifram-console").attr("src",I.baseUrl+"/mof-views/main");
+	$("#ifram-console").attr("src",I.baseUrl+"/route/mof-views/main");
 }
 //页面显示
 function showPage($menuItem){
@@ -86,12 +86,12 @@ function showPage($menuItem){
 		//嵌入到Iframe
 		$("#view-fragment").hide();
 		$(".view-ifram").show();
-		ppath=I.baseUrl+"/"+$menuItem.attr("url")+"?mid="+$menuItem.attr("id")+mapId;
+		ppath=I.baseUrl+"/route/"+$menuItem.attr("url")+"?mid="+$menuItem.attr("id")+mapId;
 		$("#ifram-console").attr("src",ppath);
 	}else if($menuItem.attr("pt")=="1"){
 		//加载页面片段
 		$(".view-ifram").hide();
-		ppath=I.baseUrl+"/"+$menuItem.attr("url")+"?mid="+$menuItem.attr("id")+mapId;
+		ppath=I.baseUrl+"/route/"+$menuItem.attr("url")+"?mid="+$menuItem.attr("id")+mapId;
 		$("#view-fragment").load(ppath,{},function(){
 			$("#view-fragment").show();//存在缓存
 		});
@@ -102,7 +102,7 @@ function showPage($menuItem){
 		ppath=$menuItem.attr("url");
 		$("#ifram-console").attr("src",ppath)
 	}else{
-		ppath=I.baseUrl+"/"+$menuItem.attr("url")+"?mid="+$menuItem.attr("id")+mapId;	
+		ppath=I.baseUrl+"/route/"+$menuItem.attr("url")+"?mid="+$menuItem.attr("id")+mapId;	
 	}
 	return ppath;
 }
@@ -138,7 +138,7 @@ function menuEvent(){
 	 });
 	 $("body").on("click","#btn-close",function(){
 		 loginOut();
-		 window.location.href=I.baseUrl+"/login.jsp";
+		 window.location.href=I.baseUrl;
 	 });
 	//顶部导航事件
 	$(".mof-header").on("click",".top-menu li",function(){

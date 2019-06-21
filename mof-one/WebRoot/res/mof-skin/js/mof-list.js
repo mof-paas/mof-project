@@ -193,11 +193,11 @@ var _pageAction=function(){
 	  var crud={};
 	  //添加
 	  crud.add=function(option){
-			parent.pageSwitch(I.baseUrl+"/mof-views/detail?s=add&mid="+_listPage.base.ID);
+			parent.pageSwitch(I.baseUrl+"/route/mof-views/detail?s=add&mid="+_listPage.base.ID);
 	  }
 	  //更新
 	  crud.update=function(option){
-		  parent.pageSwitch(I.baseUrl+"/mof-views/detail?s=update&mid="+_listPage.base.ID+"&id="+option.id);
+		  parent.pageSwitch(I.baseUrl+"/route/mof-views/detail?s=update&mid="+_listPage.base.ID+"&id="+option.id);
 	  }
 	  //删除
 	  crud.del=function(option){

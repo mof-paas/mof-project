@@ -15,6 +15,7 @@ import com.mof.common.entity.Constant;
 import com.mof.common.entity.ResultEntity;
 import com.mof.common.entity.UserEntity;
 import com.mof.common.log.LogOutput;
+import com.mof.parse.annotation.EnableCountTime;
 import com.mof.parse.tools.RequestHelper;
 
 /**
@@ -28,8 +29,10 @@ public class AuthController extends BaseController {
 	/**
 	 * 本项目内部认证
 	 */
+	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
+	@EnableCountTime
 	public ResultEntity login(HttpServletRequest request, HttpServletResponse response) {
 		ResultEntity result = new ResultEntity();
 		try {

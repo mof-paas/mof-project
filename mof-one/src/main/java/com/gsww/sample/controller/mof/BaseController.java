@@ -17,7 +17,6 @@ import com.mof.parse.core.IDispatchService;
 
 /**
  * 控制器基础父类
- * 
  * @author wang
  */
 public class BaseController {

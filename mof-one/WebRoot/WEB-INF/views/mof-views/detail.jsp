@@ -41,29 +41,30 @@
 </div>
 <!-- 按钮下拉框 -->
 <div class="btn-dropdown"></div>
-	<script src="${ctx}/res/mof-skin/js/mof-file.js?v=1.0.2" type="text/javascript"></script>
-	<script src="${ctx}/res/mof-skin/js/mof-detail.js?v=1.0.2" type="text/javascript"></script>
+	<script src="${ctx}/res/mof-skin/js/mof-file.js?v=1.0.0" type="text/javascript"></script>
 	<script type="text/javascript">
-	//自定义扩展方法
-	var	_ext=function(){
+		//页面初始化
+		I.initialPage = function() {
+	
+		};
 		//页面元素创建后
-		var createEleAfter=function(){
+		I.createEleAfter=function(){
 			
 		};
 		//业务数据赋值后
-		var dataLoadAfter=function(){
+		I.dataLoadAfter=function(){
 			
 		};
 		//保存数据成功后
-		var saveDataAfter=function(args){
+		I.saveDataAfter=function(args){
 			
 		};
 		//保存数据前
-		var saveDataBefore=function(){
+		I.saveDataBefore=function(){
 			
 		};
-	};
 	</script>
+		<script src="${ctx}/res/mof-skin/js/mof-detail.js?v=1.0.0" type="text/javascript"></script>
 </body>
 </html>
 

@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>mof-one</groupId>
@@ -6,7 +7,7 @@
 	<version>1.0</version>
 	<packaging>war</packaging>
 	<name>mof-one</name>
-	<description>魔方Web开发框架</description>
+	<description> 魔方Web开发框架</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring>4.1.9.RELEASE</spring>
@@ -14,7 +15,7 @@
 		<servlet-api>3.1.0</servlet-api>
 		<servlet.jsp>2.1</servlet.jsp>
 		<servlet.jstl>1.2</servlet.jstl>
-		<mof-sdk>1.0.2</mof-sdk>
+		<mof-sdk>1.0.6</mof-sdk>
 	</properties>
 	<dependencies>
 		<!-- servlet依赖包 -->
@@ -79,23 +80,44 @@
 			</resource>
 		</resources>
 		<testSourceDirectory>src/main/test</testSourceDirectory>
-		<plugins>
+		<pluginManagement>
+			<plugins>
 			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
+					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.5.1</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>2.4</version>
+					<configuration>
+						<warSourceDirectory>WebRoot</warSourceDirectory>
+						<failOnMissingWebXml>false</failOnMissingWebXml>
+					</configuration>
+				</plugin>
+				<!-- 编译时AOP织入插件 -->
 			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.4</version>
-				<configuration>
-					<warSourceDirectory>WebRoot</warSourceDirectory>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-				</configuration>
-			</plugin>
-		</plugins>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>aspectj-maven-plugin</artifactId>
+					<version>1.8</version>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+						<compilationLevel>1.8</compilationLevel>
+						<encoding>UTF-8</encoding>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>compile</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin> 
+			</plugins>
+		</pluginManagement>
 	</build>
 </project>

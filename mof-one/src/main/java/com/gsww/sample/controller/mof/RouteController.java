@@ -13,11 +13,9 @@ import com.mof.common.log.LogOutput;
 
 /**
  * 页面跳转路由
- * @author wang
- *
  */
 @Controller
-@RequestMapping(value = "/")
+@RequestMapping(value = "/route")
 public class RouteController  extends BaseController{
 	protected static final String CLASSNAME =RouteController.class.getName();
 	/**
@@ -25,7 +23,7 @@ public class RouteController  extends BaseController{
 	 * @param page：页面
 	 * @return
 	 */
-	@RequestMapping(value = "{path}/{page}")
+	@RequestMapping(value = "/{path}/{page}")
 	public String swapMonitor(@PathVariable String path,@PathVariable String page,HttpServletRequest request,
 			HttpServletResponse response,Model model) {
 			try {

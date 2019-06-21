@@ -1,3 +1,16 @@
+/* 页面背景主题 */
+/* 1、灰色*/
+.body_bg_gray{
+	background-color: #f6f6f6;
+}
+/* 2、白色 */
+.body_bg_white{
+	background-color: #fff;
+}
+/* 3、科幻-1 */
+.body_bg_tech_1{
+	background-color: rgb(0,18,32);
+}
 .grid-stack {
 	margin-top: 5px;
 	overflow: hidden;

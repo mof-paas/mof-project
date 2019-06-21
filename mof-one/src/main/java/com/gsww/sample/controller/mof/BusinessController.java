@@ -122,7 +122,16 @@ public class BusinessController extends BaseController {
 	 * 退出登录
 	 */
 	@RequestMapping(value = "/out", method = RequestMethod.POST)
-	public void outLogin(){
-		removeSession();
+	@ResponseBody
+	public ResultEntity outLogin(){
+		ResultEntity result = new ResultEntity();
+		try {
+			removeSession();
+			result.setCode(Constant.MOF_SERVICE_SUCCESS);
+			result.setMessage("退出成功!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

@@ -13,8 +13,16 @@
 	if(pageInfo.base.REMARK!=""){
 		$(".page-remark").html("——" +pageInfo.base.REMARK);
 	}
+	
+	/*初始化页面动态属性*/
+	//alert(pageInfo.base.LISTCSS);
+	//......................
+	
+	/*页面全局查询项*/
+	//.............................
+	
 	/*用户自定义方法*/
-	_ext.initialPage();	
+	I.initialPage();	
 	/*获取页面模块数据*/
 	var getPageModule=function(){
 		_NormalRequest({

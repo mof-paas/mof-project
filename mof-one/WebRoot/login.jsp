@@ -4,12 +4,12 @@
 <%@include file="/include/mof-meta.jsp"%>
 <head>
 <title>登录</title>
+<link rel="stylesheet" href="${ctx}/res/mof-skin/css/mof-base.css">
 <script type="text/javascript">
 	var I = {
 		baseUrl : "${ctx}"
 	};
 </script>
-<link rel="stylesheet" href="${ctx}/res/mof-skin/css/mof-base.css">
 <style type="text/css">
 /* 定义仅属于本页的样式 */
 .login-form {
@@ -41,16 +41,21 @@
 	height: 40%;
 	background-color: #f6f6f6;
 }
-.footer-title{
-text-align: center; padding-top: 150px;
-position: absolute;bottom: 50px;width: 100%;
-font-family: 微软雅黑;
+
+.footer-title {
+	text-align: center;
+	padding-top: 150px;
+	position: absolute;
+	bottom: 50px;
+	width: 100%;
+	font-family: 微软雅黑;
 }
+
 .login-table {
 	padding: 20px;
-	padding-top:40px;
-	padding-left:70px;
-	padding-right:70px;
+	padding-top: 40px;
+	padding-left: 70px;
+	padding-right: 70px;
 	width: 100%;
 	height: 50%;
 }
@@ -100,11 +105,27 @@ font-family: 微软雅黑;
 	font-size: 25px;
 	font-family: 微软雅黑;
 }
-.login-btn-root{
-margin-top:30px; text-align: center; position: absolute;bottom: 30px;width: 100%;padding-left: 80px; padding-right: 80px;
+
+.login-btn-root {
+	margin-top: 30px;
+	text-align: center;
+	position: absolute;
+	bottom: 30px;
+	width: 100%;
+	padding-left: 80px;
+	padding-right: 80px;
 }
-.btnLogin{
-margin-left: auto; margin-right: auto; margin-top: 50px; width: 100%; line-height: 35px; font-family: 微软雅黑; font-size: 20px; background-color: #33ccff; border: 0px;
+
+.btnLogin {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;
+	width: 100%;
+	line-height: 35px;
+	font-family: 微软雅黑;
+	font-size: 20px;
+	background-color: #33ccff;
+	border: 0px;
 }
 </style>
 </head>
@@ -118,10 +139,11 @@ margin-left: auto; margin-right: auto; margin-top: 50px; width: 100%; line-heigh
 		<h1 id="sysname" class="lean">网络日志分析平台</h1>
 		<span class="line2"></span>
 		<div class="login-table">
-			<table  style="width: 100%;	height: 50%;">
+			<table style="width: 100%; height: 50%;">
 				<tr>
 					<td><span class="glyphicon glyphicon-user"></span></td>
-					<td><input id="ACCOUNT"  name="ACCOUNT" class="form-control" style="background: none; font-size: 15px;" type="text"
+					<td><input id="ACCOUNT" name="ACCOUNT" class="form-control"
+						style="background: none; font-size: 15px;" type="text"
 						placeholder="账号"></td>
 				</tr>
 				<tr>
@@ -129,47 +151,46 @@ margin-left: auto; margin-right: auto; margin-top: 50px; width: 100%; line-heigh
 				</tr>
 				<tr>
 					<td><span class="glyphicon glyphicon-lock"></span></td>
-					<td><input  id="PASSWORD"  name="PASSWORD"  class="form-control"  style="background: none; font-size: 15px;" type="password"
+					<td><input id="PASSWORD" name="PASSWORD" class="form-control"
+						style="background: none; font-size: 15px;" type="password"
 						placeholder="密码"></td>
 				</tr>
 			</table>
 		</div>
 		<div class="login-btn-root">
-				<div id="btnLogin" class="btn btn-danger btnLogin">
-					登 &nbsp; &nbsp;&nbsp;录 &nbsp; &nbsp;<span class="glyphicon glyphicon-log-in"></span>
-				</div>
+			<div id="btnLogin" class="btn btn-danger btnLogin">
+				登 &nbsp; &nbsp;&nbsp;录 &nbsp; &nbsp;<span
+					class="glyphicon glyphicon-log-in"></span>
+			</div>
 		</div>
 	</div>
 	<script type="text/javascript" src="${ctx}/res/mof-skin/lib/jquery/jquery.backstretch.min.js"></script>
 	<script type="text/javascript" src="${ctx}/res/mof-skin/lib/jquery/md5.js"></script>
-	<script type="text/javascript" src="${ctx}/res/mof-skin/js/mof-base.js?v=1.0.1"></script>
-	<script type="text/javascript" src="${ctx}/res/mof-skin/js/mof-main.js?v=1.0.1"></script>
+	<script type="text/javascript" src="${ctx}/res/mof-skin/js/mof-base.js?v=1.0.0"></script>
+	<script type="text/javascript" src="${ctx}/res/mof-skin/js/mof-main.js?v=1.0.0"></script>
 	<script type="text/javascript">
-		I.initialPage = function() {
+		$(function() {
 			$(".bg-header").backstretch([ I.baseUrl + "/res/mof-skin/img/login-bg.jpg" ]);
-			$("#btnLogin").click(function(){
+			$("#btnLogin").click(function() {
 				login("login");
 			});
-		};
-		I.initialData=function(){
-			//初始化页面数据
-			getApp(function(res){
-				if(res.code=="1"){
+			getApp(function(res) {
+				if (res.code == "1") {
 					for (var i = 0; i < res.data.app.length; i++) {
-						$("#sysname").html( res.data.app[i]["SYSNAME"]);
+						$("#sysname").html(res.data.app[i]["SYSNAME"]);
 						$("title").html(res.data.app[i]["SYSNAME"]);
 					}
 				}
 			});
+		});
+		document.onkeydown = function() {
+			if (event.keyCode == 13) {
+				event.keyCode = 0;
+				event.returnValue = false;
+				login("login");
+			}
 		};
-		document.onkeydown=function(){
-		  if   (event.keyCode==13)   
-		  {   
-		   event.keyCode=0;
-		   event.returnValue=false;
-			login("login");
-		  } 
-		 }; 
 	</script>
+	<script src="${ctx}/res/mof-skin/js/mof-file-bi.js?v=1.0.0"  type="text/javascript"></script>
 </body>
 </html>

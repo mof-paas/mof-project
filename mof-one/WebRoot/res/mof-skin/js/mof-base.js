@@ -1,36 +1,21 @@
 /**
- * 通用JS工具包
+ * 基础方法
  */
 
-//页面初始化方法
-$(function() {
-	//业务元素初始化
-	if (I.initialPage) {
-		I.initialPage();
-	}
-	//业务数据初始化
-	if(I.initialData){
-		I.initialData();
-	}
-});
-//自适应大小
 window.onscroll = pageElementLayout;
 window.onresize = pageElementLayout;
 window.onload = pageElementLayout;
-// 页面元素布局大小定义
+/*页面元素布局大小定义*/
 function pageElementLayout() {
-	if (I.setLayoutHeight) {
-		I.setLayoutHeight();
+	if (I.setAutoLayout) {
+		I.setAutoLayout();
 	}
 }
-/**
- * 普通服务请求
- */
+/*普通服务请求*/
 function _NormalRequest(who) {
 	if (who.para) {
 		who.para.ts = Math.random();
 	}
-	// 显示数据的容器
 	if (who.domId) {
 		showLoading(who.domId);
 	}
@@ -39,7 +24,7 @@ function _NormalRequest(who) {
 		cache: false, 
 		url : I.baseUrl + "/" + who.url,
 		data : (who.para == undefined || who.para == null) ? {} : who.para,
-		//contentType:"application/x-www-form-urlencoded", //指定请求体类型
+		/*contentType:"application/x-www-form-urlencoded",*/
 		dataType : "json",
 		async: (who.async == undefined || who.async == null) ? true : false,
 		timeout : 30000,
@@ -49,7 +34,6 @@ function _NormalRequest(who) {
 			} else {
 				console.log(res.message);
 			}
-			// 隐藏数据的容器
 			if (who.domId) {
 				hideLoading(who.domId);
 			}
@@ -57,17 +41,13 @@ function _NormalRequest(who) {
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			debugger;
 			layer.msg("服务响应错误！");
-			// 隐藏数据的容器
 			if (who.domId) {
 				hideLoading(who.domId);
 			}
 		}
 	});
 }
-/**
- * form表单提交数据
- * @param who 请求对象
- */
+/*form表单提交数据*/
 function _FormRequest(who) {
 	if (who.para) {
 		who.para.ts = Math.random();
@@ -76,7 +56,7 @@ function _FormRequest(who) {
 		type : "POST",
 		url : I.baseUrl + "/" + who.url,
 		data : (who.para == undefined || who.para == null) ? {} : who.para,
-		//contentType:"application/x-www-form-urlencoded",//指定请求体类型
+		/*contentType:"application/x-www-form-urlencoded",*/
 		dataType : "json",
 		success : function(res) {
 			if (who.callback) {
@@ -90,12 +70,7 @@ function _FormRequest(who) {
 		}
 	});
 }
-/**
- * 获取URL中的参数
- * @param paras:参数键值
- * @param isde:1返回解码后的数据 | 其他的返回原始数据
- * @returns
- */
+/*获取URL中的参数(isde:1返回解码后的数据 | 其他的返回原始数据)*/
 function getUrlPara(paras, isde) {
 	if (!isde) {
 		isde = "";
@@ -111,31 +86,31 @@ function getUrlPara(paras, isde) {
 		return "";
 	} else {
 		if (isde == "1") {
-			return decodeURI(returnValue); // 返回解码的数据
+			return decodeURI(returnValue); 
 		} else {
-			return returnValue; // 返回参数中的原始数据
+			return returnValue; 
 		}
 	}
 }
-// 显示加载进度条
+/*显示加载进度条*/
 function showLoading(c) {
 	$("#" + c).append($("<div id='" + c+ "_01' style='position: absolute;z-index: 99999; top:" + (($("#" + c).height()>0?$("#" + c).height():340)/ 2) + "px;left:" + ($("#" + c).width() / 2) + "px;'><img src='" + I.baseUrl + "/res/mof-skin/img/loading.gif'></img></div>"));
 }
-// 隐藏加载进度
+/*隐藏加载进度*/
 function hideLoading(c) {
 	$("#" + c + "_01").remove();
 }
-// 页面顶部提示
+/*页面顶部提示*/
 function popTip(mes, c) {
 	var color = "#FE5B15";
 	switch (c) {
-	case "1": // 绿色
+	case "1": /*绿色*/
 		color = "#669900";
 		break;
-	case "2": // 黄色
+	case "2": /*黄色*/
 		color = "#ffbb33";
 		break;
-	case "3": // 红色
+	case "3": /*红色*/
 		color = "#ff4444";
 		break;
 	default:
