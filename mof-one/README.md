@@ -31,4 +31,7 @@
  * " {应用标识}"：在系统定制功能中获取您所定义的应用ID。
  
  * " {应用类型}"："1:业务管理类系统，2：数据分析类系统"。
+  
+  
+<img src="http://www.mofsoft.cn/res/skin/index/img/gzh.jpg"  width="200" height="200"/>
 		
