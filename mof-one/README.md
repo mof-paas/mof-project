@@ -1,4 +1,5 @@
 一、框架初始化方法
+
 第一步：导入到IDE开发环境
 第二步：配置数据源文件
 					修改 jdbc_sample.properties文件名为 jdbc.properties，并修改文件中的数据库配置参数。
