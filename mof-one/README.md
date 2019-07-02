@@ -54,13 +54,13 @@
   
 ## 系统运行效果预览截图
   
-![](http://www.mofsoft.cn/static/images/demo/1.png)
+![](http://www.mofsoft.cn/static/images/demo/1_1.png)
 
-![](http://www.mofsoft.cn/static/images/demo/2.png)
+![](http://www.mofsoft.cn/static/images/demo/2_2.png)
 
-![](http://www.mofsoft.cn/static/images/demo/3.png)
+![](http://www.mofsoft.cn/static/images/demo/3_3.png)
 
-![](http://www.mofsoft.cn/static/images/demo/4.png)
+![](http://www.mofsoft.cn/static/images/demo/4_4.png)
 
-![](http://www.mofsoft.cn/static/images/demo/5.png)
+![](http://www.mofsoft.cn/static/images/demo/5_5.png)
 		
