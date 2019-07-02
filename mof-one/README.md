@@ -11,18 +11,18 @@
  * 修改 web_sample.xml 文件名为 web.xml，并修改如下的配置参数：
  
  ``` java
-			<context-param>
-						    <param-name>MOF-USER-ID</param-name>
-						    <param-value>{魔方平台用户标识}</param-value>
-						  </context-param>
-						  <context-param>
-						    <param-name>MOF-APP-ID</param-name>
-						    <param-value>{应用标识}</param-value>
-						  </context-param>
-						  <context-param>
-						    <param-name>MOF-APP-TYPE</param-name>
-						    <param-value>{应用类型}</param-value>
-			</context-param>
+<context-param>
+		<param-name>MOF-USER-ID</param-name>
+		<param-value>{魔方平台用户标识}</param-value>
+</context-param>
+<context-param>
+		<param-name>MOF-APP-ID</param-name>
+		<param-value>{应用标识}</param-value>
+</context-param>
+<context-param>
+		<param-name>MOF-APP-TYPE</param-name>
+		<param-value>{应用类型}</param-value>
+</context-param>
  ```
  
 ##### 参数说明：
