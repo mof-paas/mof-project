@@ -4,6 +4,7 @@
 
 第二步：配置数据源文件
 					修改 jdbc_sample.properties文件名为 jdbc.properties，并修改文件中的数据库配置参数。
+
 第三步：修改Web.xml文件
 			<context-param>
 						    <param-name>MOF-USER-ID</param-name>
