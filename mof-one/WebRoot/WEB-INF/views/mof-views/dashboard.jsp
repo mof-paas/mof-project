@@ -25,11 +25,12 @@
 	<div class="mof-page-header">
 		<div class="header-title">
 			<span class="glyphicon glyphicon-file"></span> <span
-				class="page-title"></span> <span class="page-remark"></span>
+				class="page-title"></span> <span class="page-remark"></span><span class="badge  mof-bg-green  page-status"></span>
 		</div>
 		<div class="header-tools">
 			<div class="tools-button">
 				<!-- 按钮区域 -->
+				<span class=" btn glyphicon glyphicon-search btn-show-search"></span>
 			</div>
 			<div class="tools-search">
 				<!-- 关键字搜索-->
@@ -40,8 +41,7 @@
 	<div class="mof-page-content">
 		<!-- 数据图表区域 -->
 		<div class="mof-list-data">
-			<div id="root-container" class="container-fluid"
-				style="padding: 0px;">
+			<div id="root-container" class="container-fluid" style="padding: 0px; ">
 				<div class="grid-stack">
 					<!-- 网格模块显示区 -->
 				</div>
@@ -52,6 +52,9 @@
 	<div class="mof-page-footer"></div>
 	<!-- 按钮下拉框 -->
 	<div class="btn-dropdown"></div>
+	<!-- 搜索条件 -->
+	<div id="search-condition" class="search-condition">
+	</div>
 	<script src="${ctx}/res/mof-skin/js/mof-file-bi.js?v=1.0.0"  type="text/javascript"></script>
 	<script type="text/javascript">
 			//页面初始化

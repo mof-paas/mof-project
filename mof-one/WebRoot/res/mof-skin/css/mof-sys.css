@@ -227,6 +227,9 @@ cursor: pointer;
 .header-tools{
 	position: absolute;top:0px;  right: 0px; 
 }
+.header-tools .btn-show-search{
+	display: none;
+}
 .header-title .page-title{
 	
 }
@@ -234,7 +237,7 @@ cursor: pointer;
 	color:#ccc;
 }
 .header-title .page-status{
-	
+
 }
 .header-tools .tools-button{
 	float: right;margin-right: 10px;
@@ -249,47 +252,25 @@ cursor: pointer;
 .search-layout .search-icon{
 	position: absolute;top: 3px; right: 0px; font-size: 20px; color:#009688;
 }
+/* 查询条件弹出框 */
+.search-condition{
+	display: none; background-color:#fff;
+	padding-right: 30px;
+	position: relative;
+	height: 295px;
+}
+.search-condition .s-title{
+	line-height: 35px;
+	margin-left: 20px;
+	border-bottom: 1px solid #f6f6f6;
+}
+.search-condition .s-footer{
+	margin-top:20px;
+	text-align:center;
+}
 .mof-page-content{
 	padding:10px;
 	padding-top:60px;
-}
-/* 页面明细表格 */
-.table-detail{
-	padding-left: 100px;padding-right: 100px;
-}
-.table-grid-group{
-	line-height: 35px;
-	margin-top: 5px;
-	padding-left:10px;
-	background-color: #f6f6f6;
-	position: relative;
-	color: #EE7700;
-	border-left: 3px solid #EE7700;
-}
-.table-grid {
-width: 100%;
-border-collapse:collapse;
-margin-top: 5px;
-}
-.table-grid .tdl {
-	height: 35px;
-	text-align: right;
-	vertical-align: middle;
-	padding-right: 10px;
-	font-size: 14px;
-	white-space: nowrap;
-	padding-left: 5px;
-	color:#808080;
-	/* border: solid 1px #CCEEFF; */
-}
-.table-grid .tdl .bt{
-	color: red;
-	font-size: 20px;
-}
-.table-grid .tdv {
-	font-weight: bold;
-	padding: 5px;
-	/* border: solid 1px #CCEEFF;; */
 }
 .form-hidden{
 	display: none;

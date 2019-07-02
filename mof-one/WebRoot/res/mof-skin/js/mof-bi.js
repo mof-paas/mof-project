@@ -12,19 +12,13 @@
 	$(".page-title").html(pageInfo.base.MODULENAME);
 	if(pageInfo.base.REMARK!=""){
 		$(".page-remark").html("——" +pageInfo.base.REMARK);
-	}
-	
-	/*初始化页面动态属性*/
-	//alert(pageInfo.base.LISTCSS);
-	//......................
-	
-	/*页面全局查询项*/
-	//.............................
-	
-	/*用户自定义方法*/
+	}	
+	/*用户自定义初始化*/
 	I.initialPage();	
+	
 	/*获取页面模块数据*/
 	var getPageModule=function(){
+		$(".page-status").html(" 数据正在加载中.....");
 		_NormalRequest({
 				domId:"root-container",
 				url : "com/page-module",
@@ -42,12 +36,13 @@
 					}
 				}
 		});
-	}();
+	};
 	/*构造页面模块*/
 	var createPageModule=function(mobjs){
 		$('.grid-stack').gridstack({cellHeight : 5,disableDrag:true,disableResize:true});
 		var grid = $('.grid-stack').data('gridstack');
         grid.removeAll();
+        getSearchValue();/*获取查询条件*/
         var items = GridStackUI.Utils.sort(mobjs);
         _.each(items, function (node) {
         	var  gridItem=$('<div id="'+node.id+'" class="grid-stack-item-content grid-module" data="'+(node.data!=""?escape(JSON.stringify(node.data)):"")+'"  type="'+node.type+'" ><div class="grid-title"></div><div class="grid-content"></div></div>');
@@ -55,6 +50,7 @@
         	setModuleAttr(gridItem);
         	getModuleContent(gridItem);
         });
+    	$(".page-status").html("");
 	};
 	/*设置模块属性*/
 	var setModuleAttr=	function (domModule){
@@ -69,15 +65,15 @@
 			domModule.children(".grid-title").attr("title",attrInfo.titleClass).addClass(attrInfo.titleClass);
 		}
 	};	
+	var search={};/*页面查询条件*/
 	/*获取模块内容数据*/
 	var getModuleContent=function($module){
 		_NormalRequest({
 				domId : $module.attr("id"),
 				url : "com/module-content",
-				para :{fkModule:$module.attr("id")},
+				para :{fkModule:$module.attr("id"),MSEARCH:JSON.stringify(search)},
 				callback : function(res) {
 					if(res.code=="1"){
-					
 						var topicView={config:res.data.config, shell:res.data.shell, type:res.data.viewType,data:res.data.data};
 						createModuleContent(topicView,$module);
 					}
@@ -87,32 +83,146 @@
 	/*创建模块内容元素*/
 	var createModuleContent=function(topicView,$module){
 		switch ($module.attr("type")) {
-		case "1": //清单表
+		case "1": /*清单表*/
 			$module.children(".grid-content").html("<table id='"+$module.attr("id")+"_xc' class='table'></table>");
 			show_grid_view($module.attr("id")+"_xc",topicView.type,topicView.data,topicView.config,topicView.shell);
 			break;
-		case "2": //交叉表
+		case "2": /*交叉表*/
 			break;
-		case "3": //图表
+		case "3": /*图表*/
 			$module.children(".grid-content").html("<div id='"+$module.attr("id")+"_xc' class='chartData'  style='width:100%;height:"+($module.height()-40)+"px'></div>");
 			show_chart_view($module.attr("id")+"_xc",topicView.type,topicView.data,topicView.config,topicView.shell);
 			break;
-		case "4": //卡片
+		case "4": /*卡片*/
 			break;
-		case "5": //URL链接
+		case "5": /*URL链接*/
 			break;
-		case "6": //自定义方法
+		case "6": /*自定义方法*/
 			break;
-		case "7": //Tab标签
+		case "7": /*Tab标签*/
 			break;
-		case "8": //流式标签
+		case "8": /*流式标签*/
 			break;
 		default:
 			break;
 		}	
 	};	
+	/*获取页面查询元素*/
+	var getPageElement=function(){
+		_NormalRequest({
+			url:"com/view",
+			domId:"tableList",
+			para:{FID: pageInfo.mid,DSOT:"{METASORT:ASC}"},
+			callback:function(res){
+				if(res.code=="1"){
+					pageInfo.columns=res.data.page;
+					creatPageElement();
+					getPageModule();
+				}
+			}
+		});
+	}();
+	/*创建页面查询元素*/
+	var creatPageElement=function(){		
+		var $scur=$("#search-condition");
+		$scur.html("<div class='s-title'>请输入搜索条件：</div>");
+		$scur.append("<table class='table-grid'>"+getTableRow(pageInfo.columns)+"</table>");
+		$scur.append("<div class='s-footer'><span  class=' btn btn-search'><span class='glyphicon glyphicon-search'> </span> 开始搜索</span></div>");
+		pageEvent();
+	};
+	/*页面查询元素表格*/
+	var getTableRow=function(columns){
+		if(columns.length>0){
+			$(".btn-show-search").show();
+		}
+		var tables="";
+		for (var i = 0; i < columns.length; i++) {
+			tables+="<tr><td class='tdl'>"+columns[i].METACN+"：</td>";
+			tables+="<td  class='tdv'>"+setDataDom(columns[i])+"</td>";
+			tables+="</tr>";
+		}
+		return tables;
+	};
+	/*设置数据域类型*/
+	var setDataDom=function(column){
+		switch (column.DETAILTYPE) {
+		case "5":/*自定义字典*/
+			return "<select id='"+column.METAEN+"' name='"+column.METAEN+"' class='form-control'>"+getSelectValue(column)+"</select>";
+			break;
+		case "1":/*年*/
+			return	"<input  id='"+column.METAEN+"' name='"+column.METAEN+"'  type='text'  value='"+column.DETAILVALUE+"'   class='form-control form_datetime'   data-date-format='yyyy'>";
+			break;
+		case "2":/*年月*/
+			return	"<input  id='"+column.METAEN+"' name='"+column.METAEN+"'  type='text'  value='"+column.DETAILVALUE+"'   class='form-control form_datetime'   data-date-format='yyyy-mm'>";
+			break;
+		case "3":/*年月日*/
+			return	"<input  id='"+column.METAEN+"' name='"+column.METAEN+"'  type='text'  value='"+column.DETAILVALUE+"'   class='form-control form_datetime'   data-date-format='yyyy-mm-dd'>";
+			break;
+		case "4":/*关联字典*/
+			return "<select id='"+column.METAEN+"' name='"+column.METAEN+"' class='form-control'></select>";
+			break;
+		default:	
+			return "<input  id="+column.METAEN+"  name='"+column.METAEN+"'  value='"+column.DETAILVALUE+"' class='form-control'/>";
+			break;
+		};
+	};
+	/*获得下拉值*/
+	var getSelectValue=function(column){
+		var reop="<option value=''>---</option>";
+		/*静态下拉值*/
+		if(column.DETAILVALUE!=""){
+			try {
+				var options=JSON.parse(column.DETAILVALUE);
+				for (var i = 0; i < options.length; i++) {
+					reop+="<option value='"+options[i].key+"'>"+options[i].val+"</option>";
+				}
+			} catch (e) {
+				console.log("静态字典数据定义不规范！");
+			}
+			return reop;
+		}
+		/*关联下拉值*/
+		/*..........................*/
+		return reop;
+	};
+	/*注册事件*/
+	var pageEvent=function(){
+		/*显示查询条件*/
+		$("body").on("click",".btn-show-search",function(event){
+			layer.open({
+				  	type: 1,
+				   title: false,
+				   closeBtn: 0,
+				   shadeClose: true,
+				   area: ['400px', '300px'],
+				   content: $("#search-condition"),
+				   zIndex:100
+				});
+		});
+		/*日期控件*/
+		$('.form_datetime').datetimepicker({
+			language:  'zh-CN',
+            defaultDate: "1990-1-1", 
+           autoclose: true,
+           startView: 4,
+          	minView:2, 
+          	todayHighlight: 1,
+            todayBtn: true
+        });
+		$(".search-condition").on("click",".btn-search",function(){
+			getPageModule();
+			layer.closeAll();
+		});
+	};
+	/*创建查询条件*/
+	function getSearchValue(){
+		$("#search-condition input,select").each(function(index,item){
+			search[$(item).attr("id")]=$(item).val();
+		});
+	};
 	return pageInfo;
 }();
+
 /*数据透视图形*/
 var function_register = {
 	bar : {name:"get_echart_bar",method:get_echart_bar},/* 柱状图 */

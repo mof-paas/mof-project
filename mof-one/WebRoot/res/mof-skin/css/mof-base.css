@@ -10,3 +10,42 @@ font-size: 14px;
 .mof-bg-green{
 		background-color: green;
 }
+/* 页面元素表格 */
+.table-detail{
+	padding-left: 100px;
+	padding-right: 100px;
+}
+.table-grid-group{
+	line-height: 35px;
+	margin-top: 5px;
+	padding-left:10px;
+	background-color: #f6f6f6;
+	position: relative;
+	color: #EE7700;
+	border-left: 3px solid #EE7700;
+}
+.table-grid {
+width: 100%;
+border-collapse:collapse;
+margin-top: 5px;
+}
+.table-grid .tdl {
+	height: 35px;
+	text-align: right;
+	vertical-align: middle;
+	padding-right: 10px;
+	font-size: 14px;
+	white-space: nowrap;
+	padding-left: 5px;
+	color:#808080;
+	/* border: solid 1px #CCEEFF; */
+}
+.table-grid .tdl .bt{
+	color: red;
+	font-size: 20px;
+}
+.table-grid .tdv {
+	font-weight: bold;
+	padding: 5px;
+	/* border: solid 1px #CCEEFF;; */
+}
