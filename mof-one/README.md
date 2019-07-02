@@ -1,16 +1,16 @@
 ## 框架使用帮助
 
-####第一步：把框架导入到IDE开发环境
+#### 第一步：把框架导入到IDE开发环境
 
-####第二步：配置数据源文件
+#### 第二步：配置数据源文件
 
  * 修改  jdbc_sample.properties 文件名为  jdbc.properties ，并修改文件中的数据库配置参数。
 
-####第三步：修改Web.xml文件
+#### 第三步：修改Web.xml文件
 
  * 修改 web_sample.xml 文件名为 web.xml，并修改如下的配置参数：
  
- ```java
+ ``` java
 			<context-param>
 						    <param-name>MOF-USER-ID</param-name>
 						    <param-value>{魔方平台用户标识}</param-value>
@@ -25,7 +25,7 @@
 			</context-param>
  ```
  
-#####参数说明：
+##### 参数说明：
  * " {魔方平台用户标识}"：注册魔方软件服务平台(  http://www.mofsoft.cn  ) 可获得用户标识。
  
  * " {应用标识}"：在系统定制功能中获取您所定义的应用ID。
