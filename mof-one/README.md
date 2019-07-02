@@ -33,5 +33,5 @@
  * " {应用类型}"："1:业务管理类系统，2：数据分析类系统"。
   
   
-<img src="http://www.mofsoft.cn/res/skin/index/img/gzh.jpg"  width="200" height="200"/>
+![](http://www.mofsoft.cn/res/skin/index/img/gzh.jpg)
 		
