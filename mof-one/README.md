@@ -51,6 +51,15 @@
  
  * " {应用类型}"："1:业务管理类系统，2：数据分析类系统"。 
   
+## 系统运行效果预览截图
   
-![](http://www.mofsoft.cn/res/skin/index/img/gzh.jpg)
+![](http://www.mofsoft.cn/static/images/demo/1.png)
+
+![](http://www.mofsoft.cn/static/images/demo/2.png)
+
+![](http://www.mofsoft.cn/static/images/demo/3.png)
+
+![](http://www.mofsoft.cn/static/images/demo/4.png)
+
+![](http://www.mofsoft.cn/static/images/demo/5.png)
 		
