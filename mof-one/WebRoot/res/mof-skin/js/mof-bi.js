@@ -1,3 +1,8 @@
+/**
+ * 功能：数据分析显示
+ * 版本：V1.0.1
+ * 修改日期：2019-07-16
+ */
 /*创建页面模块*/
 ;var _pageModule=function(){
 	/*从控制台获取指定功能信息*/
@@ -57,6 +62,7 @@
 		if(domModule.attr("data")!=""){
 			var attrInfo=JSON.parse(unescape(domModule.attr("data")));
 			if(attrInfo.moduleTitle!=""){
+						domModule.attr("title_1",attrInfo.moduleTitle);
 						domModule.children(".grid-title").html("<span  class='glyphicon glyphicon-dashboard'></span> " +attrInfo.moduleTitle);
 			}else{
 						domModule.children(".grid-title").html("");
@@ -94,10 +100,12 @@
 			show_chart_view($module.attr("id")+"_xc",topicView.type,topicView.data,topicView.config,topicView.shell);
 			break;
 		case "4": /*卡片*/
+			show_card_view($module.attr("id"),topicView.type,topicView.data,topicView.config,topicView.shell);
 			break;
 		case "5": /*URL链接*/
 			break;
 		case "6": /*自定义方法*/
+			show_custom_view($module.attr("id"),topicView.type,topicView.data,topicView.config,topicView.shell);
 			break;
 		case "7": /*Tab标签*/
 			break;
@@ -231,6 +239,8 @@ var function_register = {
 	grid : {name:"get_grid_list",method:get_grid_list},/* 清单表 */
 	radar : {name:"get_echart_radar",method:get_echart_radar},/* 雷达图 */
 	gauge : {name:"get_echart_gauge",method:get_echart_gauge},/* 仪表盘 */
+	card : {name:"get_card_data",method:get_card_data},/* 卡片 */
+	custom : {name:"get_custom_data",method:get_custom_data},/* 自定义*/
 };
 /*图表类数据显示*/
 function show_chart_view(mId,vtype,data,config,shell){
@@ -241,7 +251,7 @@ function show_chart_view(mId,vtype,data,config,shell){
 	}
 	initEchart({method:m_name,container:mId,data:data,config:config},option);
 };
-//表格类数据显示
+/*表格类数据显示*/
 function show_grid_view(mId,vtype,data,config,shell){
 	var m_name=function_register[vtype].name;
 	var option=null;
@@ -250,7 +260,24 @@ function show_grid_view(mId,vtype,data,config,shell){
 	}
 	initBootstrapGrid({method:m_name,container:mId,data:data,config:config},option);
 };
-
+/*卡片类数据显示*/
+function show_card_view(mId,vtype,data,config,shell){
+	var m_name=function_register[vtype].name;
+	var option=null;
+	if(shell!="" && shell!="null"){
+		option=eval('(function(result,config){'+shell+'})(data,config)');
+	}
+	initCard({method:m_name,container:mId,data:data,config:config},option);
+};
+/*自定义数据显示*/
+function show_custom_view(mId,vtype,data,config,shell){
+	var m_name=function_register[vtype].name;
+	var option=null;
+	if(shell!="" && shell!="null"){
+		option=eval('(function(result,config){'+shell+'})(data,config)');
+	}
+	initCustom({method:m_name,container:mId,data:data,config:config},option);
+};
 /**
  * 获取【柱状图】配置模板
  */
@@ -566,6 +593,62 @@ function get_grid_list(result, config) {
 	return option;
 };
 /**
+ * 获取【卡片】配置模板
+ */
+function get_card_data(result, config) {
+	var option={};
+	option.height="10px";
+	option.width="100%";
+	/*样式*/
+	for (var i = 0; i < config.option.length; i++) {
+		if(config.option[i].id=="txt_style"){
+			option.style=config.option[i].value;
+			continue;
+		}
+		if(config.option[i].id=="txt_icon"){
+			option.icon=config.option[i].value;
+			continue;
+		}
+	}
+	/*数据*/
+	if(result.length>0){
+		/* 数据列 */
+		for ( var key in result[0]) {
+			/* 统计维度 */
+			for (var h = 0; h < config.xAxis.length; h++) {
+				if (key == config.xAxis[h].field) {
+					option.text=result[0][key];
+					break;
+				}
+			};
+			/* 查找度量项值*/
+			for (var j = 0; j < config.series.length; j++) {
+				if (key == config.series[j].field) {
+					option.value=result[0][key];
+					break;
+				}
+			};
+		};
+	}else{
+		option.value=0;
+	}
+	return option;
+};
+/**
+ * 获取【自定义】配置模板
+ */
+function get_custom_data(result, config){
+	var option={};
+	/*样式*/
+	for (var i = 0; i < config.option.length; i++) {
+		if(config.option[i].id=="txt_method"){
+			option.method=config.option[i].value;
+			continue;
+		}
+	}
+	return option;
+};
+/**
  * 基于echart图表显示模板
  */
 function initEchart(paras, option) {
@@ -615,6 +698,44 @@ function initBootstrapGrid(paras, option)
 					$listTable.bootstrapTable('load', data);
 					/*删除刷新*/
 					$listTable.bootstrapTable('refresh', data);
+};
+/**
+ * 卡片模板
+ */
+function initCard(paras, option) {
+	var data = paras.data;
+	var config = paras.config;
+	var cardOption;
+	if (option) {
+		cardOption = option;
+	} else {
+		cardOption = eval(paras.method + "(data,config)");
+	}
+	var $curRoot=$("#"+paras.container);
+	$curRoot.attr("style",cardOption.style);
+	$curRoot.css("padding-left" ,"35px");
+	$curRoot.css("padding-right" ,"30px");
+	$curRoot.html("<table style='height:"+$curRoot.height()+"px;width:100%;'><tr><td style='font-size: 35px;'><span class='"+cardOption.icon+"'></span> </td><td style='text-align: right;'><div style='"+ config.series[0].style+"'>"+cardOption.value+"<span style='font-size:11px'>  ("+config.series[0].unit+")</span></div> <div>"+$curRoot.attr("title_1")+"</div></td></tr></table>");
+};
+/**
+ * 自定义模板
+ */
+function initCustom(paras, option) {
+	var data = paras.data;
+	var config = paras.config;
+	var modId=paras.container;
+	var customOption;
+	if (option) {
+		customOption = option;
+	} else {
+		customOption = eval(paras.method + "(data,config)");
+	}
+	try {
+		var domContent=eval(customOption.method + "(modId,data,config)");
+		$("#"+paras.container).html(domContent);
+	} catch (e) {
+		$("#"+paras.container).html("未定义方法或定义错误！")
+	}
 };
 /*获取数据*/
 function getViewData($module){
