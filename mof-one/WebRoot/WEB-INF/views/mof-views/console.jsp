@@ -80,8 +80,8 @@
 			});
 		});
 		I.setAutoLayout = function() {
-			$(".mof-content-left").height(document.documentElement.clientHeight - 71);
-			$("#ifram-console").height(document.documentElement.clientHeight - 71);
+			$(".mof-content-left").height(document.documentElement.clientHeight -76);
+			$("#ifram-console").height(document.documentElement.clientHeight - 76);
 		};
 	</script>
 </body>

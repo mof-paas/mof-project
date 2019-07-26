@@ -1,7 +1,7 @@
 ;var _detailPage=function(){
 			//从控制台获取指定功能信息
 			var pageInfo={};
-			pageInfo.base= parent.getMenuItem(getUrlPara("mid"));
+			getPageBaseInfo(getUrlPara("mid"));
 			pageInfo.status=getUrlPara("s");
 			$(".page-title").html(pageInfo.base.MODULENAME);
 			if(pageInfo.base.REMARK!=""){
@@ -17,7 +17,25 @@
 				$("head").append("<link rel='stylesheet' href="+I.baseUrl+"/res/"+pageInfo.base.LISTCSS+"'>");
 			};
 			if(pageInfo.base.LISTEXT!=""){
-				//扩展类
+				/*扩展类*/
+			};
+			/*获取当前页面信息*/
+			function getPageBaseInfo(mid){
+				/*从控制台导航中获取页面信息*/
+				pageInfo.base= parent.getMenuItem(mid);
+				/*从后台获取页面信息*/
+				if(!pageInfo.base){
+					_NormalRequest({
+						url:"com/module",
+						para:{"ID":mid},
+						async:false,
+						callback:function(res){
+							if(res.code=="1" && res.data.length>0){
+								pageInfo.base=res.data[0];
+							}
+						}
+					});
+				}
 			};
 			//获取页面机构元素
 			var getPageElement=function(){

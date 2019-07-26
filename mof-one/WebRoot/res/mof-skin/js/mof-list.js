@@ -2,7 +2,7 @@
 ;var _listPage=function(){
 	/*从控制台获取指定功能信息*/
 	var pageInfo={};
-	pageInfo.base= parent.getMenuItem(getUrlPara("mid"));
+	getPageBaseInfo(getUrlPara("mid"));
 	$(".page-title").html(pageInfo.base.MODULENAME);
 	if(pageInfo.base.REMARK!=""){
 		$(".page-remark").html("——" +pageInfo.base.REMARK);
@@ -25,6 +25,24 @@
 	if(pageInfo.base.LISTEXT!=""){
 		/*扩展类*/
 	}
+	/*获取当前页面信息*/
+	function getPageBaseInfo(mid){
+		/*从控制台导航中获取页面信息*/
+		pageInfo.base= parent.getMenuItem(mid);
+		/*从后台获取页面信息*/
+		if(!pageInfo.base){
+			_NormalRequest({
+				url:"com/module",
+				para:{"ID":mid},
+				async:false,
+				callback:function(res){
+					if(res.code=="1" && res.data.length>0){
+						pageInfo.base=res.data[0];
+					}
+				}
+			});
+		}
+	};
 	/*获取页面结构元素*/
 	var getPageElement=function(){
 		_NormalRequest({
@@ -42,14 +60,14 @@
 	}();
 	/*创建页面元素*/
 	var creatPageElement=function(){
-		creatTableList()//数据列表
-		pageEvent();//注册页面事件
+		creatTableList()/*数据列表*/
+		pageEvent();/*注册页面事件*/
 	};
-	//设置表格列属性
+	/*设置表格列属性*/
 var setColumn=function(){
-			var tableColumn=[];//表格列；
+			var tableColumn=[];/*表格列*/
 			tableColumn.push({radio : true});
-			//序号
+			/*序号*/
 			tableColumn.push({field : 'NO',title : '序号', width:60,
 				formatter : function (value, row, index) {
 						return index+1;
@@ -60,17 +78,17 @@ var setColumn=function(){
 					if(pageInfo.columns[i].LISTISSHOW=="1"){
 							col.visible=false;
 					}
-					//列样式模板
+					/*列样式模板*/
 					var ctem=pageInfo.columns[i].LISTTEMPLATE;
 					if(ctem!=null && ctem!="null" && ctem!=""){
 						col.formatter=eval("("+unescape(ctem)+")");
 					}
 					tableColumn.push(col);
 			};
-			var listBtn={};	//设置操作列
-			var topBtn={};//顶部操作按钮
+			var listBtn={};	/*设置操作列*/
+			var topBtn={};/*顶部操作按钮*/
 			for (var j = 0; j < pageInfo.buttons.length; j++) {
-					//列表按钮
+					/*列表按钮*/
 					if(pageInfo.buttons[j].VIEWTYPE=="list" && pageInfo.buttons[j].BTNLOCATION=="list"){
 						 if(!listBtn[pageInfo.buttons[j].BTNGROUP]){
 							 listBtn[pageInfo.buttons[j].BTNGROUP]=[pageInfo.buttons[j]];
@@ -79,7 +97,7 @@ var setColumn=function(){
 						 }
 						 continue;
 					}
-					//顶部按钮
+					/*顶部按钮*/
 					if(pageInfo.buttons[j].VIEWTYPE=="list" && pageInfo.buttons[j].BTNLOCATION=="top"){
 							 if(!topBtn[pageInfo.buttons[j].BTNGROUP]){
 								 topBtn[pageInfo.buttons[j].BTNGROUP]=[pageInfo.buttons[j]];
@@ -94,22 +112,22 @@ var setColumn=function(){
 									return setButtonDom(listBtn,{"id":row.ID},"0");
 						       }
 					});
-			//设置页面顶部按钮
+			/*设置页面顶部按钮*/
 			$(".tools-button").html(setButtonDom(topBtn,{"id":""},"1"));
 			return tableColumn;
 	};
-//按钮显示模板
+/*按钮显示模板*/
 var setButtonDom=function(btns,args,t){
-			//t:表示相比顶部样式有变动
+			/*t:表示相比顶部样式有变动*/
 			var btnOne="";
 			var btnGroups="";
 			 for(var btn in btns){
-				//独立按钮
+				/*独立按钮*/
 				 if(btns[btn].length==1){
 					 btnOne+= " <button data='"+args.id+"'  id='"+btns[btn][0].BTNCODE+"' class='btn page-btn"+(t=="0"?" btn-list":"")+"'  action='"+btns[btn][0].BTNEVENT+"'><span class='glyphicon "+btns[btn][0].BTNICON+"'></span> "+btns[btn][0].BTNNAME+"</button> ";
 				 	continue;
 				 }
-				//下拉按钮
+				/*下拉按钮*/
 				 var btnItems="";
 				 for (var i = 0; i < btns[btn].length; i++) {
 					 btnItems+="<li data='"+args.id+"'  id='"+btns[btn][i].BTNCODE+"' action='"+btns[btn][i].BTNEVENT+"' class='page-btn'><span class='glyphicon "+btns[btn][i].BTNICON+"' > </span> "+btns[btn][i].BTNNAME+"</li>";
@@ -118,20 +136,20 @@ var setButtonDom=function(btns,args,t){
 			 	}
 			 return btnOne+btnGroups;
 	};
-	//注册事件
+	/*注册事件*/
 	var pageEvent=function(){
-		//下拉按钮事件
+		/*下拉按钮事件*/
 		$("body").on("click",".btn-list-down",function(event){
 			var $cur=$(this);
 			$(".btn-dropdown").css("left",$cur.offset().left-$(".btn-dropdown").width()+$cur.width()).css("top",$cur.offset().top+$cur.height()+8).html(unescape($cur.attr("down"))).slideDown("fast");
 			event.stopPropagation();
 		});
-		//常规按钮事件
+		/*常规按钮事件*/
 		$("#tableList,.tools-button,.btn-dropdown").on("click",".page-btn",function(event){
 			btnAction($(this))
 		});
 	};
-	//常规默认按钮事件
+	/*常规默认按钮事件*/
 	var btnAction=function(btnObj){
 		if(!btnObj.attr("action") || btnObj.attr("action")=="") {
 			layer.msg("未注册事件！");
@@ -161,28 +179,44 @@ var setButtonDom=function(btns,args,t){
 			break;
 		}
 	};
-	//创建数据列表
+	var setDataSearchParas=function(){
+		var searchPara={};
+		/*1、*从路径中获取参数*/
+		if(pageInfo.base.PATHPARA!=""){
+			var paralist=pageInfo.base.PATHPARA.split();
+			for (var p = 0; p < paralist.length; p++) {
+				searchPara[paralist[p]]=getUrlPara(paralist[p]);
+			}
+		}
+		/*2、页面动态查询参数*/
+		/*.......................*/
+		return searchPara;
+	};
+	/*创建数据列表*/
 	var creatTableList=function(){
 		if(!I.MOID || I.MOID==""){
 			layer.msg("页面未指定实体对象！");
 			return;
 		}
+		/*查询参数*/
+		 var  globalParas= $.extend({}, {MOID:I.MOID},setDataSearchParas());
+		 
 		 _NormalRequest({
 				url:"biz/read",
 				domId:"tableList",
-				para:{MOID:I.MOID},
+				para:globalParas,
 				callback:function(res){
 					if(res.code=="0"){
 						layer.msg(res.message);
 						return;
 					}
 					initTable(setColumn(),res.data,{search:true});
-					//快速查询
+					/*快速查询*/
 					$(".tools-search").append($(".search").addClass("search-layout").append("<span class='glyphicon glyphicon-search search-icon'></span>"));
 				}
 			});
 	};
-	//关闭按钮下拉 
+	/*关闭按钮下拉*/
 	$(document).click(function(){ 
 		   $(".btn-dropdown").hide(); 
 	});
@@ -191,19 +225,21 @@ var setButtonDom=function(btns,args,t){
 	/* 页面行为 */
 var _pageAction=function(){
 	  var crud={};
-	  //添加
+	  /*添加*/
 	  crud.add=function(option){
-			parent.pageSwitch(I.baseUrl+"/route/mof-views/detail?s=add&mid="+_listPage.base.ID);
+		 /*parent.pageSwitch(I.baseUrl+"/route/mof-views/detail?s=add&mid="+_listPage.base.ID);*/
+		  window.location.href=I.baseUrl+"/route/mof-views/detail?s=add&mid="+_listPage.base.ID;
 	  }
-	  //更新
+	  /*更新*/
 	  crud.update=function(option){
-		  parent.pageSwitch(I.baseUrl+"/route/mof-views/detail?s=update&mid="+_listPage.base.ID+"&id="+option.id);
+		/* parent.pageSwitch(I.baseUrl+"/route/mof-views/detail?s=update&mid="+_listPage.base.ID+"&id="+option.id);*/
+		  window.location.href=I.baseUrl+"/route/mof-views/detail?s=update&mid="+_listPage.base.ID+"&id="+option.id;
 	  }
-	  //删除
+	  /*删除*/
 	  crud.del=function(option){
 		  deleteData(option);
 	  }
-	  //读取
+	  /*读取*/
 	crud.read=function(option){
 		  
 	  }
