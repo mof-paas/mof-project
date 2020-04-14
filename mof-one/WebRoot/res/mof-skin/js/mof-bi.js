@@ -5,22 +5,35 @@
  */
 /*创建页面模块*/
 ;var _pageModule=function(){
-	/*从控制台获取指定功能信息*/
 	var pageInfo={};
-	pageInfo.base= parent.getMenuItem(getUrlPara("mid"));
+	getPageBaseInfo(getUrlPara("pageId"));
+	$(".page-title").html(pageInfo.base.pageName);
+	if(pageInfo.base.pageRemark!=""){
+		$(".page-remark").html("——" +pageInfo.base.pageRemark);
+	}
 	/*判断是否映射的模块*/
 	if(getUrlPara("mapId")!=""){
 		pageInfo.mid=getUrlPara("mapId")
 	}else{
 		pageInfo.mid=pageInfo.base.ID
 	}
-	$(".page-title").html(pageInfo.base.MODULENAME);
-	if(pageInfo.base.REMARK!=""){
-		$(".page-remark").html("——" +pageInfo.base.REMARK);
-	}	
 	/*用户自定义初始化*/
 	I.initialPage();	
 	
+	/*获取当前页面信息*/
+	function getPageBaseInfo(pageId){
+		/*从后台获取页面信息*/
+			_NormalRequest({
+				url:"com/view",
+				para:{"ID":pageId},
+				async:false,
+				callback:function(res){
+					if(res.code=="1" && res.data.length>0){
+						pageInfo.base=res.data[0];
+					}
+				}
+			});
+	};
 	/*获取页面模块数据*/
 	var getPageModule=function(){
 		$(".page-status").html(" 数据正在加载中.....");
@@ -118,9 +131,9 @@
 	/*获取页面查询元素*/
 	var getPageElement=function(){
 		_NormalRequest({
-			url:"com/view",
+			url:"com/element",
 			domId:"tableList",
-			para:{FID: pageInfo.mid,DSOT:"{METASORT:ASC}"},
+			para:{PAGEID: pageInfo.base.ID,DSOT:"{METASORT:ASC}"},
 			callback:function(res){
 				if(res.code=="1"){
 					pageInfo.columns=res.data.page;
@@ -185,7 +198,7 @@
 					reop+="<option value='"+options[i].key+"'>"+options[i].val+"</option>";
 				}
 			} catch (e) {
-				console.log("静态字典数据定义不规范！");
+				console.log("静态字典不规范！");
 			}
 			return reop;
 		}
@@ -681,9 +694,9 @@ function initBootstrapGrid(paras, option)
 						columns : cols,
 						sortable: true,   
 						sortOrder: "ASC",   
-						pagination: (option.isPage!=undefined?option.isPage:false),  
+						pagination: ((option && option.isPage!=undefined)?option.isPage:false),  
 						pageNumber:1,     
-						search: (option.search==undefined ? false:option.search),    
+						search: ((option && option.search!=undefined)?option.search:false),    
 				        pageSize: 20,   
 				        pageList: [20, 100],      
 				        clickToSelect: true,  

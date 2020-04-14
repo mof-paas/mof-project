@@ -1,7 +1,9 @@
 package com.gsww.sample.controller.mof;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,7 +51,36 @@ public class BusinessController extends BaseController {
 		}
 		return result;
 	}
-
+	/**
+	 * 获取对象元数据和业务数据
+	 */
+	@RequestMapping(value = "/objdata", method = RequestMethod.POST)
+	@ResponseBody
+	public ResultEntity readMetaAndData(HttpServletRequest request, HttpServletResponse response) {
+		ResultEntity result = new ResultEntity();
+		try {
+			RequestEntity requestEntity=RequestHelper.getRequestEntity(request);
+			//非空参数验证
+			List<String> vpara=new ArrayList<String>(1);
+			vpara.add(Constant.MOF_MOID);
+			String emptyKeys=validateParas(vpara,requestEntity);
+			if(!emptyKeys.isEmpty()){
+				result.setCode(Constant.MOF_SERVICE_ERROR);
+				result.setMessage("以下参数不能为空值："+emptyKeys);
+				return result;
+			}
+			Map<String,Object> metaMap=new HashMap<String,Object>();
+			metaMap.put("data", dispatchService.read(getSessionUser(), mofEntity, (String)requestEntity.getMapParas().get(Constant.MOF_MOID), requestEntity).getData());
+			metaMap.put("meta", dispatchService.readModel(getSessionUser(), mofEntity, (String)requestEntity.getMapParas().get(Constant.MOF_MOID), requestEntity).getData());
+			result.setData(metaMap);
+			result.setCode(Constant.MOF_SERVICE_SUCCESS);
+			} catch (Exception e) {
+				result.setCode(Constant.MOF_SERVICE_ERROR);
+				result.setMessage("程序异常[readMetaAndData]");
+				e.printStackTrace();
+		}
+		return result;
+	}
 	// 创建
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	@ResponseBody

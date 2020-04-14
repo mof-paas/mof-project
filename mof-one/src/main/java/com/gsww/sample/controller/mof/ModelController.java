@@ -49,6 +49,8 @@ public class ModelController extends BaseController {
 			}
 			result=dispatchService.readData(getSessionUser(), mofEntity, (String)requestEntity.getMapParas().get(Constant.MOF_MOID), requestEntity);
 		} catch (Exception e) {
+			result.setCode(Constant.MOF_SERVICE_ERROR);
+			result.setMessage("程序异常[readApp]");
 			e.printStackTrace();
 		}
 		return result;
@@ -73,6 +75,8 @@ public class ModelController extends BaseController {
 			}
 			result=dispatchService.readModel(getSessionUser(), mofEntity, (String)requestEntity.getMapParas().get(Constant.MOF_MOID), requestEntity);
 		} catch (Exception e) {
+			result.setCode(Constant.MOF_SERVICE_ERROR);
+			result.setMessage("程序异常[readModel]");
 			e.printStackTrace();
 		}
 		return result;
@@ -102,6 +106,8 @@ public class ModelController extends BaseController {
 			result.setCode(sysData.getCode());
 			result.setMessage(sysData.getMessage());
 		} catch (Exception e) {
+			result.setCode(Constant.MOF_SERVICE_ERROR);
+			result.setMessage("程序异常[readSystemInfo]");
 			e.printStackTrace();
 		}
 		return result;
@@ -118,6 +124,25 @@ public class ModelController extends BaseController {
 			requestEntity.getMapParas().put("SYSTEMID", mofEntity.getMofAppId());
 			result=dispatchService.readSystemModule(getSessionUser(), mofEntity, null,requestEntity);
 		} catch (Exception e) {
+			result.setCode(Constant.MOF_SERVICE_ERROR);
+			result.setMessage("程序异常[readSystemModule]");
+			e.printStackTrace();
+		}
+		return result;
+	}
+	/**
+	 * 获取系统模块页面
+	 */
+	@RequestMapping(value = "/view", method = RequestMethod.POST)
+	@ResponseBody
+	public ResultEntity readSysModulePage(HttpServletRequest request, HttpServletResponse response) {
+		ResultEntity result = new ResultEntity();
+		try {
+			RequestEntity requestEntity=RequestHelper.getRequestEntity(request);
+			result=dispatchService.readSysModulePage(getSessionUser(), mofEntity,requestEntity);
+		} catch (Exception e) {
+			result.setCode(Constant.MOF_SERVICE_ERROR);
+			result.setMessage("程序异常[readSysModulePage]");
 			e.printStackTrace();
 		}
 		return result;
@@ -125,7 +150,7 @@ public class ModelController extends BaseController {
 	/**
 	 * 获取系统页面元素
 	 */
-	@RequestMapping(value = "/view", method = RequestMethod.POST)
+	@RequestMapping(value = "/element", method = RequestMethod.POST)
 	@ResponseBody
 	public ResultEntity readSysPageElement(HttpServletRequest request, HttpServletResponse response) {
 		ResultEntity result = new ResultEntity();
@@ -133,6 +158,8 @@ public class ModelController extends BaseController {
 			RequestEntity requestEntity=RequestHelper.getRequestEntity(request);
 			result=dispatchService.readSysPageElement(getSessionUser(), mofEntity,requestEntity);
 		} catch (Exception e) {
+			result.setCode(Constant.MOF_SERVICE_ERROR);
+			result.setMessage("程序异常[readSysPageElement]");
 			e.printStackTrace();
 		}
 		return result;
@@ -148,6 +175,8 @@ public class ModelController extends BaseController {
 			RequestEntity requestEntity=RequestHelper.getRequestEntity(request);
 			result=dispatchService.readPageModule(getSessionUser(), mofEntity,requestEntity);
 		} catch (Exception e) {
+			result.setCode(Constant.MOF_SERVICE_ERROR);
+			result.setMessage("程序异常[readPageModule]");
 			e.printStackTrace();
 		}
 		return result;
@@ -163,6 +192,8 @@ public class ModelController extends BaseController {
 			RequestEntity requestEntity=RequestHelper.getRequestEntity(request);
 			result=dispatchService.readPageModuleContent(getSessionUser(), mofEntity,requestEntity);
 		} catch (Exception e) {
+			result.setCode(Constant.MOF_SERVICE_ERROR);
+			result.setMessage("程序异常[readPageModuleContent]");
 			e.printStackTrace();
 		}
 		return result;

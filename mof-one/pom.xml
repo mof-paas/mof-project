@@ -2,9 +2,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>mof-one</groupId>
+	<groupId>mofsoft</groupId>
 	<artifactId>mof-one</artifactId>
-	<version>1.0</version>
+	<version>1.0.0</version>
 	<packaging>war</packaging>
 	<name>mof-one</name>
 	<description> 魔方Web开发框架</description>
@@ -15,7 +15,7 @@
 		<servlet-api>3.1.0</servlet-api>
 		<servlet.jsp>2.1</servlet.jsp>
 		<servlet.jstl>1.2</servlet.jstl>
-		<mof-sdk>1.0.8</mof-sdk>
+		<mof-sdk>1.0.10</mof-sdk>
 	</properties>
 	<dependencies>
 		<!-- servlet依赖包 -->
@@ -63,7 +63,7 @@
 		</dependency>
 		<!-- 本地工程 -->
 		<dependency>
-			<groupId>mof-paas</groupId>
+			<groupId>mofsoft</groupId>
 			<artifactId>mof-sdk</artifactId>
 			<version>${mof-sdk}</version>
 		</dependency>
@@ -106,7 +106,6 @@
 					<configuration>
 						<source>1.8</source>
 						<target>1.8</target>
-						<compilationLevel>1.8</compilationLevel>
 						<encoding>UTF-8</encoding>
 					</configuration>
 					<executions>

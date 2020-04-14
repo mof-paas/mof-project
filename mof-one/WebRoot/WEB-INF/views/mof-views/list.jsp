@@ -9,6 +9,11 @@
 		baseUrl : "${ctx}",
 	};
 </script>
+<style type="text/css">
+.btn_retftr{
+cursor: pointer;
+}
+</style>
 </head>
 <body>
 <!-- 页面顶部区域 -->
@@ -31,6 +36,7 @@
 <div class="mof-page-content">
 <!-- 列表记录 -->
 <div class="mof-list-data">
+	<table></table>
 	<table id="tableList" class="table">
 	</table>
 </div>
@@ -41,10 +47,13 @@
 <!-- 按钮下拉框 -->
 <div class="btn-dropdown"></div>
 	<script src="${ctx}/res/mof-skin/js/mof-file.js?v=1.0.0" type="text/javascript"></script>
+	<script src="${ctx}/res/rjdl/function.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		//页面初始化
 		I.initialPage = function() {
-	
+			$("#tableList").on("click",".btn_retftr",function(){
+				window.location.href="${ctx}/route/mof-views/list?mid=6000000635928709&SSGN="+$(this).attr("data");
+			});
 		};
 		//页面元素创建后
 		I.createEleAfter=function(){

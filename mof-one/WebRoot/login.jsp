@@ -136,7 +136,7 @@
 	</div>
 	<div class="login-form">
 		<span class="line1"></span>
-		<h1 id="sysname" class="lean">网络日志分析平台</h1>
+		<h1 id="sysname" class="lean">数据资源管理</h1>
 		<span class="line2"></span>
 		<div class="login-table">
 			<table style="width: 100%; height: 50%;">

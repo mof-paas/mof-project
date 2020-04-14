@@ -72,9 +72,10 @@ function loadMainPage(){
 	$("#ifram-console").attr("src",I.baseUrl+"/route/mof-views/main");
 }
 //页面显示
-function showPage($menuItem){
+function showPage($menuItem,openType){
+	var pageInfo=getModulePages($menuItem.attr("id"));
 	var ppath="";
-	if($menuItem.attr("url")==""){
+	if(pageInfo.pageUrl==undefined || pageInfo.pageUrl==""){
 		return "";
 	}
 	//判断映射模块
@@ -82,30 +83,59 @@ function showPage($menuItem){
 	if($menuItem.attr("mapId")!=""){
 		mapId+="&mapId="+$menuItem.attr("mapId");
 	}
-	if($menuItem.attr("pt")=="0"){
+	//页面路径
+	ppath=I.baseUrl+"/route/"+pageInfo.pageUrl+"?pageId="+pageInfo.id+mapId;
+
+	if(pageInfo.source=="ifram"){
+		if(openType=="A"){
+			return ppath;
+		}
 		//嵌入到Iframe
 		$("#view-fragment").hide();
 		$(".view-ifram").show();
-		ppath=I.baseUrl+"/route/"+$menuItem.attr("url")+"?mid="+$menuItem.attr("id")+mapId;
 		$("#ifram-console").attr("src",ppath);
-	}else if($menuItem.attr("pt")=="1"){
+	}else if(pageInfo.source=="fragment"){
 		//加载页面片段
 		$(".view-ifram").hide();
-		ppath=I.baseUrl+"/route/"+$menuItem.attr("url")+"?mid="+$menuItem.attr("id")+mapId;
 		$("#view-fragment").load(ppath,{},function(){
 			$("#view-fragment").show();//存在缓存
 		});
-	}else if($menuItem.attr("pt")=="2"){
+	}else if(pageInfo.source=="http"){
 		//外部页面
+		ppath=pageInfo.pageUrl;
+		if(openType=="A"){
+			return ppath;
+		}
 		$("#view-fragment").hide();
 		$(".view-ifram").show();
-		ppath=$menuItem.attr("url");
 		$("#ifram-console").attr("src",ppath)
-	}else{
-		ppath=I.baseUrl+"/route/"+$menuItem.attr("url")+"?mid="+$menuItem.attr("id")+mapId;	
 	}
 	return ppath;
 }
+/*获取模块关联的页面*/
+function getModulePages(mid){
+	/*从后台获取页面信息*/
+	var loadPageInfo={};
+		_NormalRequest({
+			url:"com/view",
+			para:{"MODULEID":mid},
+			async:false,
+			callback:function(res){
+				if(res.code=="1" && res.data.length>0){
+					/*模块默认加载的页面*/
+					for (var i = 0; i < res.data.length; i++) {
+						if(res.data[i].ISLOAD=="1"){
+							loadPageInfo.id=res.data[i].ID;
+							loadPageInfo.source=res.data[i].source;
+							loadPageInfo.pageUrl=res.data[i].pageUrl;
+							break;
+						}
+					}
+				}
+			}
+		});
+		return loadPageInfo;
+};
 //页面显示类型
 function showPageType(leftMenu){
 	 switch (leftMenu.attr("am")) {
@@ -118,10 +148,10 @@ function showPageType(leftMenu){
 				showPage(leftMenu);
 				break;
 			case "3"://弹出窗口
-				popWindow(leftMenu.text(),showPage(leftMenu),null,null,false);
+				popWindow(leftMenu.text(),showPage(leftMenu,"A"),null,null,false);
 				break;
 			case "4"://打开新页面
-				widows.open(showPage(leftMenu));
+				widows.open(showPage(leftMenu,"A"));
 				break;
 			default:
 				break;
@@ -166,10 +196,10 @@ function menuEvent(){
 					$(".mof-content-left").hide();
 					break;
 				case "3"://弹出窗口
-					popWindow($oneMenu.text(),showPage($oneMenu),null,null,false);
+					popWindow($oneMenu.text(),showPage($oneMenu,"A"),null,null,false);
 					break;
 				case "4"://打开新页面
-					widows.open(showPage($oneMenu));
+					widows.open(showPage($oneMenu,"A"));
 					break;
 				default:
 					break;
@@ -279,6 +309,10 @@ function menuEvent(){
 //弹出窗口
 function popWindow(title,url,w,h,isfull)
 {
+	if(url==null || url==""){
+		layer.msg("未指定关联页面！");
+		return;
+	}
 	var perContent = layer.open({
 		title : "<span class='glyphicon glyphicon-map-marker'></span> "+title,
 		type : 2,
