@@ -11,7 +11,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring>4.1.9.RELEASE</spring>
-		<fasterxml>2.6.4</fasterxml>
+		<fasterxml>2.11.0</fasterxml>
 		<servlet-api>3.1.0</servlet-api>
 		<servlet.jsp>2.1</servlet.jsp>
 		<servlet.jstl>1.2</servlet.jstl>
